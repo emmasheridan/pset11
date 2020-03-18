@@ -1,11 +1,19 @@
-
+// block = [length, width, height]
 
 /* Create the possible block rotations */ 
-private static int[][] blockOptions(int[][] inputBlocks) {
+private static int[][] blockOptions(int[][] inputBlocks, int num) {
 
+    int len = num*3;
+    int[][] blockArray = new int[len][3];
 
-
-
+    for(int i = 0; i < len; i++){
+        int[] currBlock = inputBlock[i];
+        blockArray[3*i] = int[Math.min(currBlock[i][0], currBlock[i][1]), Math.max(currBlock[i][0], currBlock[i][1]), currBlock[i][2]];
+        blockArray[3*i + 1] = int[Math.min(currBlock[i][0], currBlock[i][2]), Math.max(currBlock[i][0], currBlock[i][2]), currBlock[i][1]];
+        blockArray[3*i + 2] = int[Math.min(currBlock[i][1], currBlock[i][2]), Math.max(currBlock[i][1], currBlock[i][2]), currBlock[i][0]];
+    
+    }
+    return blockArray;
 
 }
 
@@ -108,7 +116,12 @@ private static int[][] computeHeights(int[][] possibleTowers) {
 
 public static void main(String [] args) {
 
+    int[] exbblock1 = [1,2,3];
+    int[] exblock2 = [4,3,6];
+    int[] exblock3 = [2,7,5];
+    int[][] exblockarray = [exblock1, exblock2, exblock3];
 
+    blockOptions(exblockarray, 3);
     // initialize 1xD DP table 
 
     // block options 
