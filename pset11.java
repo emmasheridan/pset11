@@ -1,6 +1,6 @@
 // block = [length, width, height]
 
-/* Create the possible block rotations */ 
+/* Create all the possible block rotations */ 
 private static int[][] blockOptions(int[][] inputBlocks, int num) {
 
     int len = num*3;
@@ -17,22 +17,72 @@ private static int[][] blockOptions(int[][] inputBlocks, int num) {
 
 }
 
-/* Sort all possible block options smallest to largest by first index and then by second index*/
+//not sure if "this" translates correctly
+//so sort method sorts in decreasing order on the base area of the blocks
+@Override
+public int compareTo(int[] block){
+    return block[0]*block[1] - this[0]*this[1];
+}
+
+
+/* Sort all possible block options largest to smallest by surface area of the base*/
 private static int[][] sortBlocks(int[][] allBlocks) {
+    Arrays.sort(allBlocks);
+    return allBlocks;
+}
 
+private static int[] maxTower(int[][] blockArr, int num){
+    
+    int len = num*3;
+    int[] dpTable = new int[len];
+    
+    //initialize values in the 1-dimensional DP table to just the height of the top block
+    for(int i = 0; i < len; i++){
+        dpTable[i] = blockArr[i][2];
+    }
 
+    //use the DP table to maximize the height of the blocks that can fit underneath the given top block
+    for(int i = 0; i < len; i++){
+        dpTable[i] = 0;
 
+        //current specified top block
+        int[] currBlock = blockArr[i];
+        //height of the block or blocks that fit under the specified top block
+        int prevHeight = 0;
 
+        //look at all the blocks with bigger base areas than block i
+        for(int j = 0; j < i; j++){
+            int[] prevBlock = blockArr[j];
+            
+            //if the length and width of the current top block are stricly smaller than the length and width of the block to be placed underneath
+            if(currBlock[0] < prevBlock[0] && currBlock[1] < prevBlock[1]){
+                //update currHeight to reflect whether the maximum tower height has increased
+                prevHeight = Math.max(prevHeight, dpTable[j]);
+            }
+        }
+        //add the max height of the previous blocks to the height of the current top block to get the maximum tower height given the specified top block
+        dpTable[i] = prevHeight + currBlock[2];
+    }
+    return dpTable;
 
+}
 
+//find the maximum tower height in the dpTable
+private static int maxHeight(int[] dpTable, int num){
+    int len = num*3;
+    int max = 0;
+    
+    for(int i = 0; i < len; i++){
+        max = Math.max(max, dpTable[i]);
+    }
 
+    return max;
 }
 
 
 
 
-
-
+//DONT USE
 /* Find the blocks that fit on top of each other */ 
 private static int[][] compareBlocks(int[][] sortedBlocks) {
 
@@ -57,21 +107,11 @@ private static int[][] compareBlocks(int[][] sortedBlocks) {
                 // Call possibleTower on each j
                 // possible towers will be an array that stores all the possible towers for j things 
                 possibleTowers = possibleTower(sortedBlocks, );
-
-
-
-
-
         }
-
-
-
     }
-
-
-
 }
 
+//DONT USE
 /* Calculates a possible tower given an assumed top block and second block */ 
 private static int[][] possibleTower(int[][] sortedBlocks, int[] topBlock, int[] secondBlock) {
 
@@ -96,17 +136,13 @@ private static int[][] possibleTower(int[][] sortedBlocks, int[] topBlock, int[]
 }
 
 
+//DONT USE
 private static int[][] computeHeights(int[][] possibleTowers) {
-
-
     // Compute all the heights for all towers 
 
     // Find maximum height 
 
     // Return tower with maximum height
-
-
-
 }
 
 
@@ -121,28 +157,32 @@ public static void main(String [] args) {
     int[] exblock3 = [2,7,5];
     int[][] exblockarray = [exblock1, exblock2, exblock3];
 
-    blockOptions(exblockarray, 3);
+    int[][] blockArr = blockOptions(exblockarray, 3);
+
+    blockArr = sortBlocks(blockArr);
+
+    int[] dpTable = maxTower(blockArr, 3);
+
+    int height = maxHeight(dpTable, 3);
+   
+    //CALCULATE THIS
+    //number of blocks in the tower
+    int numBlocks;
+
+    System.out.println("The tallest tower has " + numBlocks + " block and a height of " + height);
+
+    //OUTPUT FILE WITH NUMBLOCKS AND EACH BLOCK PRINTED
+
+
+
+
     // initialize 1xD DP table 
-
     // block options 
-
     // sort blocks 
-
     // compare blocks (calls possible tower)
-
     // compute heights (returns a tower)
-
     // add tower returned from computing heights to DP table 
-
     // handle input 
-
-
-
     // compute max height using DP lookup table 
     
-
-
-
-
-
 }
