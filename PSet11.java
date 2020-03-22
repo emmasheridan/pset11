@@ -1,5 +1,11 @@
 package pset11java;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 
 public class PSet11 {
@@ -110,28 +116,69 @@ public class PSet11 {
 
 
 	/* Testing block stacking */ 
-	public static void main(String [] args) {
+	public static void main(String [] args) throws IOException {
 
-		// an example 
-		Block[] exblockarray = new Block[3];
-		exblockarray[0] = new Block(1,2,3);
-		exblockarray[1] = new Block(4,3,6);
-		exblockarray[2] = new Block(2,7,5);
+//		// an example 
+//		Block[] exblockarray = new Block[3];
+//		exblockarray[0] = new Block(1,2,3);
+//		exblockarray[1] = new Block(4,3,6);
+//		exblockarray[2] = new Block(2,7,5);
+//
+//	    Block[] blockArr = blockOptions(exblockarray, 3);
+//	    blockArr = sortBlocks(blockArr);
+//	    int[] dpTable = maxTower(blockArr, 3);
+//	    int height = maxHeight(dpTable, 3);
+		
+			
+		String fileName = args[0]; // input the file name as an argument 
+		File file = new File(fileName);
+		FileInputStream fis = new FileInputStream(file);
+		InputStreamReader isr = new InputStreamReader(fis);
+		BufferedReader br = new BufferedReader(isr);
+		
+		// read the first line for the number of blocks
+		String line;
+		line = br.readLine();
+		int numBlocks = Integer.parseInt(line.trim());
+		Block[] blockArr = new Block[numBlocks];
+				
+		int counter = 0;
+		
+		// read in the remaining lines and create blocks 
+		while(line != null && counter < numBlocks) {
+			
+			// split the line into its 3 numbers
+			line = br.readLine(); 
+			String[] tempArray; 
+			
+			tempArray = line.split(" ");
+			
+			int height = Integer.parseInt(tempArray[0]);
+			int width = Integer.parseInt(tempArray[1]);
+			int depth = Integer.parseInt(tempArray[2]);
+			
+			// create block with the parsed h, w, and d; add to block array
+			Block block = new Block(height, width, depth);
+			blockArr[counter] = block;
+			counter++;
+			
+		}
+		br.close();		
+				
+		// find max height tower
+		Block[] blockOpt = blockOptions(blockArr, numBlocks);
+	    blockOpt = sortBlocks(blockOpt);
+	    int[] dpTable = maxTower(blockOpt, numBlocks);
+	    int height = maxHeight(dpTable, numBlocks);
+		
+				
+	    // CALCULATE THIS
+	    // number of blocks in the tower
+	    int numBlocksAns = 0;
 
-	    Block[] blockArr = blockOptions(exblockarray, 3);
-	    blockArr = sortBlocks(blockArr);
-	    int[] dpTable = maxTower(blockArr, 3);
-	    int height = maxHeight(dpTable, 3);
-	    
-	    
-	   
-	    //CALCULATE THIS
-	    //number of blocks in the tower
-	    int numBlocks = 0;
+	    System.out.println("The tallest tower has " + numBlocksAns + " blocks and a height of " + height);
 
-	    System.out.println("The tallest tower has " + numBlocks + " block and a height of " + height);
-
-	    //OUTPUT FILE WITH NUMBLOCKS AND EACH BLOCK PRINTED
+	    // OUTPUT FILE WITH NUMBLOCKS AND EACH BLOCK PRINTED
 
 
 	    
