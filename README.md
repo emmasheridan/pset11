@@ -3,7 +3,7 @@
 
 ### About the Files
 PSet11.java contains code for Block Stacking algorithm. 
-PSet11.java can be run in the command line with the first argument being the name of the desired input file. An output file will contain the number of blocks and block orientation for the max height tower. 
+PSet11.java can be run in the command line with the first argument being the name of the desired input file. Specify the name of the output file as the second argument. An output file will contain the number of blocks and block orientation for the max height tower.
 
 ### Documentation 
 #### The Algorithm
