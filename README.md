@@ -9,7 +9,7 @@ PSet11.java can be run in the command line with the first argument being the nam
 #### The Algorithm
 The algorithm we implemented for the Block Stacking problem first generates all possible rotations for the blocks given as input. It then computes the area of these blocks and sorts all the blocks by area. Then we construct and use our DP table. We pick a top block and check all blocks with an area smaller than the top block. We update the tower height accordingly. This gets repeated so that every block gets to be the assumed top block. In the end, we can use our DP table to look up the max height. 
 
-Discuss optimal substructure??
+Discuss optimal substructure?? to argue correctness?
 
 Our algorithms expected running time is O(n^2). 
 
@@ -19,6 +19,8 @@ The code consists of 4 methods (blockOptions, sortBlocks, maxTower, maxHeight) a
 We originally tried to build our algorithm without creating a block object. Without a block object, the use of 2D arrays became complicated as well as comparing the area of blocks. After implementing a block object that holds information for the block's height, width, and depth, the code became much cleaner and easier to follow. 
 
 We tested our code first by creating examples in our main, before the program had file I/O capability. We created some blocks that we knew the correct height for and fed them into our methods.  
+
+sample testing results??
 
 
 
