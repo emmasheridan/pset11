@@ -7,7 +7,7 @@ PSet11.java can be run in the command line with the first argument being the nam
 
 ### Documentation 
 #### The Algorithm
-The algorithm we implemented for the Block Stacking problem first generates all possible rotations for the blocks given as input. It then computes the area of these blocks and sorts all the blocks by area. Then we construct and use our DP table. We pick a top block and check all blocks with an area smaller than the top block. We update the tower height accordingly. This gets repeated so that every block gets to be the assumed top block. In the end, we can use our DP table to look up the max height. 
+The algorithm we implemented for the Block Stacking problem first generates all possible rotations for the blocks given as input. It then computes the area of these blocks and sorts all the blocks by area. Then we construct and use our DP table. We pick a top block and check all blocks with an area larger than the top block. We update the tower height accordingly. This gets repeated so that every block gets to be the assumed top block. In the end, we can use our DP table to look up the max height. 
 
 Discuss optimal substructure?? to argue correctness?
 
