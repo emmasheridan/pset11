@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.util.Arrays;
 
 public class PSet11 {
@@ -170,6 +171,8 @@ public class PSet11 {
 	    blockOpt = sortBlocks(blockOpt);
 	    int[] dpTable = maxTower(blockOpt, numBlocks);
 	    int height = maxHeight(dpTable, numBlocks);
+	    
+	    Block[] outputBlocks = null;
 		
 				
 	    // CALCULATE THIS
@@ -177,8 +180,14 @@ public class PSet11 {
 	    int numBlocksAns = 0;
 
 	    System.out.println("The tallest tower has " + numBlocksAns + " blocks and a height of " + height);
-
-	    // OUTPUT FILE WITH NUMBLOCKS AND EACH BLOCK PRINTED
+	    
+	    // create output file with name of second argument 
+	    PrintWriter writer = new PrintWriter(args[1], "UTF-8");
+	    writer.println(numBlocksAns);
+	    for(int i = 0; i < outputBlocks.length; i++) {
+	    		writer.println(outputBlocks[i].height + " " + outputBlocks[i].width + " " + outputBlocks[i].depth);
+	    }
+	    writer.close();
 
 
 	    
