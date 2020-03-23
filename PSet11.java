@@ -9,6 +9,9 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.Arrays;
 
+public HashMap<Block, List<Block>> towers;
+public Block topBlock;
+
 public class PSet11 {
 	
 	/* Block class to handle object elements (width, height, depth, area) */
@@ -71,10 +74,15 @@ public class PSet11 {
 	    
 	    int len = num*3;
 	    int[] dpTable = new int[len];
+		//HashMap to keep track of the towers being built
+		towers = new HashMap<Block, List<Block>>();
 	    
 	    // initialize values in the 1-dimensional DP table to just the height of the top block
 	    for(int i = 0; i < len; i++){
 	        dpTable[i] = blockArr[i].height;
+		
+		//initialize HashMap
+		towers.put(blockArr[i], new ArrayList<Block>(blockArr[i]));
 	    }
 
 	    // use the DP table to maximize the height of the blocks that can fit underneath the given top block
@@ -93,7 +101,15 @@ public class PSet11 {
 	            // if the length and width of the current top block are strictly smaller than the length and width of the block to be placed underneath
 	            if(currBlock.width < prevBlock.width && currBlock.depth < prevBlock.depth){
 	                // update currHeight to reflect whether the maximum tower height has increased
-	                prevHeight = Math.max(prevHeight, dpTable[j]);
+	               // prevHeight = Math.max(prevHeight, dpTable[j]);
+			if(prevHeight < dpTable[j]){
+				prevHeight = dpTable[j];
+				
+				//add the current block onto the previous block's tower and store in HashMap for the current block
+				List<Block> prevTower = towers.get(prevBlock); 
+				prevTower.add(currBlock);
+				towers.put(currBlock, prevTower);
+			}
 	            }
 	        }
 	        // add the max height of the previous blocks to the height of the current top block to get the maximum tower height given the specified top block
@@ -104,12 +120,15 @@ public class PSet11 {
 	}
 
 	/* Lookup max height tower from DP table */
-	private static int maxHeight(int[] dpTable, int num){
+	private static int maxHeight(int[] dpTable, int num, Block[] blockArr){
 	    int len = num*3;
 	    int max = -1;
 	    
 	    for(int i = 0; i < len; i++){
-	        max = Math.max(max, dpTable[i]);
+		if(max < dpTable[i]){
+			max = dpTable[i];
+			topBlock = blockArr[i];
+		}
 	    }
 
 	    return max;
@@ -119,16 +138,7 @@ public class PSet11 {
 	/* Testing block stacking */ 
 	public static void main(String [] args) throws IOException {
 
-//		// an example 
-//		Block[] exblockarray = new Block[3];
-//		exblockarray[0] = new Block(1,2,3);
-//		exblockarray[1] = new Block(4,3,6);
-//		exblockarray[2] = new Block(2,7,5);
-//
-//	    Block[] blockArr = blockOptions(exblockarray, 3);
-//	    blockArr = sortBlocks(blockArr);
-//	    int[] dpTable = maxTower(blockArr, 3);
-//	    int height = maxHeight(dpTable, 3);
+
 		
 			
 		String fileName = args[0]; // input the file name as an argument 
@@ -170,22 +180,22 @@ public class PSet11 {
 		Block[] blockOpt = blockOptions(blockArr, numBlocks);
 	    blockOpt = sortBlocks(blockOpt);
 	    int[] dpTable = maxTower(blockOpt, numBlocks);
-	    int height = maxHeight(dpTable, numBlocks);
+	    int height = maxHeight(dpTable, numBlocks, blockOpt);
 	    
-	    Block[] outputBlocks = null;
+	 //blocks in the tower
+	 List<Block> outputBlocks = towers.get(topBlock);
 		
 				
-	    // CALCULATE THIS
 	    // number of blocks in the tower
-	    int numBlocksAns = 0;
+	    int numBlocksAns = outputBlock.size();
 
 	    System.out.println("The tallest tower has " + numBlocksAns + " blocks and a height of " + height);
 	    
 	    // create output file with name of second argument 
 	    PrintWriter writer = new PrintWriter(args[1], "UTF-8");
 	    writer.println(numBlocksAns);
-	    for(int i = 0; i < outputBlocks.length; i++) {
-	    		writer.println(outputBlocks[i].height + " " + outputBlocks[i].width + " " + outputBlocks[i].depth);
+	    for(int i = 0; i < outputBlocks.size(); i++) {
+	    		writer.println(outputBlocks.get(i).height + " " + outputBlocks.get(i).width + " " + outputBlocks.get(i).depth);
 	    }
 	    writer.close();
 
