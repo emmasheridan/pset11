@@ -75,13 +75,6 @@ public class PSet11d2 {
 		}
 
 		Arrays.sort(rotArray);
-		for (int j = 0; j < rotArray.length; j++) {
-			System.out.println(
-					"height: " + rotArray[j].height + " width: " + rotArray[j].width + " depth: " + rotArray[j].depth);
-			System.out.println("areas:  " + rotArray[j].area);
-
-		}
-
 		return rotArray;
 	}
 
@@ -90,6 +83,7 @@ public class PSet11d2 {
 
 		int len = num * 3;
 		int[] dpTable = new int[len];
+		
 		// HashMap to keep track of the towers being built
 		towers = new HashMap<Block, ArrayList<Block>>();
 
@@ -112,6 +106,7 @@ public class PSet11d2 {
 
 			// current specified top block
 			Block currBlock = blockArr[i];
+
 			// height of the block or blocks that fit under the specified top block
 			int prevHeight = 0;
 
@@ -122,7 +117,6 @@ public class PSet11d2 {
 				// if the length and width of the current top block are strictly smaller than
 				// the length and width of the block to be placed underneath
 				if (currBlock.width < prevBlock.width && currBlock.depth < prevBlock.depth) {
-					// update currHeight to reflect whether the maximum tower height has increased
 
 					if (prevHeight < dpTable[j]) {
 						prevHeight = dpTable[j];
@@ -130,40 +124,12 @@ public class PSet11d2 {
 						// add the current block onto the previous block's tower and store in HashMap
 						// for the current block
 						ArrayList<Block> prevTower = towers.get(prevBlock);
-						// System.out.println("previous block: " + "w: " + prevBlock.width + " h: " +
-						// prevBlock.height + " d: " + prevBlock.depth);
-						// System.out.println("previous tower: " + prevTower.get(0).area);
-						//if (prevTower.get(prevTower.size() -1) != currBlock) {
-							prevTower.add(currBlock);
-							// System.out.println("current block: " + "w: " + currBlock.width + " h: " +
-							// currBlock.height + " d: " + currBlock.depth);
-							towers.put(currBlock, prevTower);
-						//}
-
-						// System.out.println("towers: " + Arrays.asList(towers));
-
-						// for(int k = 0; k < towers.size(); k++) {
-
-						// System.out.println("towers: " + towers.);
-
-						// }
-
-						// }
-
-						// for (Block block : towers.keySet()) {
-						// System.out.println("block: " + "w: " + block.width + " h: " + block.height +
-						// " d: " + block.depth);
-
-						// for(int k = 0; k < towers.get(block).size(); k++) {
-						// System.out.println("tower: " + k + " " + " w: " +
-						// towers.get(block).get(k).width + " h: " + towers.get(block).get(k).height + "
-						// d: " + towers.get(block).get(k).depth );
-						// }
-						// }
-
+						prevTower.add(currBlock);
+						towers.put(currBlock, prevTower);
 					}
 
 					else {
+						// update currHeight to reflect whether the maximum tower height has increased
 						prevHeight = Math.max(prevHeight, dpTable[j]);
 					}
 				}
