@@ -19,9 +19,26 @@ The code consists of 4 methods (blockOptions, sortBlocks, maxTower, maxHeight) a
 
 We originally tried to build our algorithm without creating a block object. Without a block object, the use of 2D arrays became complicated as well as comparing the area of blocks. After implementing a block object that holds information for the block's height, width, and depth, the code became much cleaner and easier to follow. 
 
-We tested our code first by creating examples in our main, before the program had file I/O capability. We created some blocks that we knew the correct height for and fed them into our methods.  
+We tested our code first by creating examples in our main, before the program had file I/O capability. We created some blocks that we knew the correct height for and fed them into our methods.  We also tested with some input files. 
 
-sample testing results??
+Some examples: 
+
+3 
+2 6 8
+4 4 4
+1 10 4
+The tallest tower has a height of 20. 
+
+4 
+4 6 7
+1 2 3
+4 5 6
+10 12 32
+The tallest tower has a height of 60.
+
+
+
+
 
 
 
