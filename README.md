@@ -10,9 +10,9 @@ The files can be run in the command line with the first argument being the path 
 #### The Algorithm
 The algorithm we implemented for the Block Stacking problem first generates all possible rotations for the blocks given as input. It then computes the area of these blocks and sorts all the blocks by area. Then we construct and use our DP table. We pick a top block and check all blocks with an area larger than the top block. We update the tower height accordingly. This gets repeated so that every block gets to be the assumed top block. In the end, we can use our DP table to look up the max height. 
 
-Discuss optimal substructure?? to argue correctness?
+By our algorithm, each entry in the DP table contains the max height of a stack with that entry's blocks on top. Thus the tallest stack is the one maximized after looking at all top blocks. 
 
-Our algorithms expected running time is O(n^2). 
+Our algorithms expected running time is O(n^2). Each operation is O(n) and there are O(n) subproblems, thus O(n^2). 
 
 #### The Code 
 The code consists of 4 methods (blockOptions, sortBlocks, maxTower, maxHeight) and a class for a Block object. The 4 methods feed into each other. First, we used blockOptions to generate all combinations of the block's dimensions. We then use sortBlocks to all the block options by area. Then in maxTower, we find the combination of block options that creates the max tower (also filling in the DP table). Lastly, we use maxHeight to look into our DP for the height of the max tower. There is also a main method that handles file I/O and formats our output.
