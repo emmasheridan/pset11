@@ -24,16 +24,26 @@ We tested our code first by creating examples in our main, before the program ha
 Some examples: 
 
 3 
+
 2 6 8
+
 4 4 4
+
 1 10 4
+
 The tallest tower has a height of 20. 
 
+
 4 
+
 4 6 7
+
 1 2 3
+
 4 5 6
+
 10 12 32
+
 The tallest tower has a height of 60.
 
 
